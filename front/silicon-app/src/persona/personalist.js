@@ -7,32 +7,32 @@ class PersonaList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personas: []
+      personas: [],
     };
     this.onDelete = this.onDelete.bind(this);
   }
 
-  onDelete(dni){
+  onDelete(dni) {
     let request = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
-        "Accept": 'application/json'
-      }
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     };
 
     fetch(`http://localhost:8080/api/persona/${dni}`, request)
-      .then(res => {
-        return res.json().then(body => {
+      .then((res) => {
+        return res.json().then((body) => {
           return {
             status: res.status,
             ok: res.ok,
             headers: res.headers,
-            body: body
+            body: body,
           };
         });
       })
-      .then(result => {
+      .then((result) => {
         if (result.ok) {
           toast.success(result.body.message, {
             position: "bottom-right",
@@ -43,7 +43,7 @@ class PersonaList extends React.Component {
             draggable: true,
             progress: undefined,
             theme: "light",
-          }); 
+          });
           this.componentDidMount();
         } else {
           toast.error(result.body.message, {
@@ -62,24 +62,25 @@ class PersonaList extends React.Component {
 
   componentDidMount() {
     fetch("http://localhost:8080/api/persona")
-      .then(res => res.json())
-      .then(result => {
-        console.log(result);
-        this.setState({
-          personas: result
-        });
-      },
-        // Nota: es importante manejar errores aquí y no en 
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          this.setState({
+            personas: result,
+          });
+        },
+        // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
         // de errores reales en los componentes.
         (error) => {
           console.log(error);
           this.setState({
             error,
-            personas: []
+            personas: [],
           });
         }
-      )
+      );
   }
   render() {
     let rowsTable = this.state.personas.map((persona, index) => {
@@ -89,23 +90,24 @@ class PersonaList extends React.Component {
           <td>{persona.nombre}</td>
           <td>{persona.apellido}</td>
           <td>
-          <Link to={`/persona/gest/${persona.dni}`}>
-          <button className="btn btn-primary">
-              <span class="material-symbols-outlined">
-                edit
-              </span>
-            </button>
-          </Link>
-          <button type="submit" className="btn btn-danger" onClick={()=>this.onDelete(persona.dni)}>
+            <Link to={`/persona/gest/${persona.dni}`}>
+              <button className="btn btn-primary">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+            </Link>
+            <button
+              type="submit"
+              className="btn btn-danger"
+              onClick={() => this.onDelete(persona.dni)}
+            >
               <span class="material-symbols-outlined center-align">
                 delete_forever
               </span>
-              <span>
-              </span>
+              <span></span>
             </button>
           </td>
         </tr>
-      )
+      );
     });
 
     return (
@@ -120,12 +122,9 @@ class PersonaList extends React.Component {
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            {rowsTable}
-          </tbody>
+          <tbody>{rowsTable}</tbody>
         </table>
       </>
-
     );
   }
 }
