@@ -20,7 +20,7 @@ FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
 CREATE TABLE curso (
-id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id INT UNSIGNEDAUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(255),
 descripcion VARCHAR(1000),
 imagen VARCHAR(1000),
@@ -39,8 +39,8 @@ INSERT INTO usuario (email, nickname, password, rol) VALUES
 ('usuario1@ejemplo.com', 'usuario1', '123456', 'alumno'),
 ('usuario2@ejemplo.com', 'usuario2', '123456', 'alumno'),
 ('usuario3@ejemplo.com', 'usuario3', '123456', 'alumno'),
-('usuario4@ejemplo.com', 'usuario4', '123456', 'alumno'),
-('usuario5@ejemplo.com', 'usuario5', '123456', 'alumno');
+('docente@docente.com', 'docente', 'docente', 'docente'),
+('admin@admin.com', 'admin', 'admin', 'admin');
 
 INSERT INTO alumno (nombre, apellido, dni, id_usuario) VALUES
 ('Juan', 'Pérez', '12345678', 1),
