@@ -11,9 +11,11 @@ import { ToastContainer } from "react-toastify";
 
 import Home from "./home";
 import Menu from "./Menu";
-import PersonaGest from "./persona/PersonaGest";
-import PersonaGrid from "./persona/PersonaGrid";
-import PersonaList from "./persona/PersonaList";
+import Login from './Login';
+import AlumnoGest from "./alumno/AlumnoGest";
+import AlumnoGrid from "./alumno/AlumnoGrid";
+import AlumnoList from "./alumno/AlumnoList";
+
 
 function App() {
   return (
@@ -22,11 +24,11 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/persona/list" element={<PersonaList />} />
-          <Route path="/persona/grid" element={<PersonaGrid />} />
-          <Route path="/persona/gest/:dni" element={<PersonaGest />} />
-          <Route path="/persona/gest" element={<PersonaGest />} />
-
+          <Route path="/alumno/list" element={<AlumnoList />} />
+          <Route path="/alumno/grid" element={<AlumnoGrid />} />
+          <Route path="/alumno/gest/:dni" element={<AlumnoGest />} />
+          <Route path="/alumno/gest" element={<AlumnoGest />} />
+          <Route path="/Login" element={<Login />} /> 
           <Route path="/texto/:text" element={<Texto />} />
         </Routes>
       </div>
@@ -41,7 +43,7 @@ function Texto() {
   const navigate = useNavigate();
   let mode = searchParams.get("mode");
   // setTimeout(() => {
-  //   navigate('/persona/gest');
+  //   navigate('/alumno/gest');
   // }, 5000);
   return (
     <>
