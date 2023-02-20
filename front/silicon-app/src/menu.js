@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import login from "./Login";
+
 
 function Menu() {
     return <>
@@ -19,14 +21,18 @@ function Menu() {
                             <Link to="/about" className="nav-link">About</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/persona/list" className="nav-link">Listar Personas</Link>
-                        </li> 
-                        <li className="nav-item">
-                            <Link to="/persona/grid" className="nav-link">Grilla Personas</Link>
+                            <Link to="/alumno/list" className="nav-link">Listar Alumnos</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/persona/gest" className="nav-link">Gestion Personas</Link>
+                            <Link to="/alumno/grid" className="nav-link">Grilla de Alumnos</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/alumno/gest" className="nav-link">Gestion de Alumnos</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link">Ingresar</Link>
+                        </li>
+                        
                     </ul>
                 </div>
 
