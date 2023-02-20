@@ -2,31 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Menu from "../Menu";
 
-class PersonaGrid extends React.Component {
+class AlumnoGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personas: []
+      alumnos: []
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/persona")
+    fetch("http://localhost:8080/api/alumno")
       .then(res => res.json())
       .then(result => {
         console.log(result);
         this.setState({
-          personas: result
+          alumnos: result
         });
       },
-        // Nota: es importante manejar errores aquí y no en 
-        // un bloque catch() para que no interceptemos errores
-        // de errores reales en los componentes.
+       
         (error) => {
           console.log(error);
           this.setState({
             error,
-            personas: []
+            alumnos: []
           });
         }
       )
@@ -34,15 +32,15 @@ class PersonaGrid extends React.Component {
   render() {
     return (
       <>
-        <h1>Lista de personas</h1>
+        <h1>Lista de Alumnos</h1>
         {
-              this.state.personas.map((persona, index) => {
+              this.state.alumnos.map((alumno, index) => {
                 return (
                   <div key={index} className="row">
                     <div className="col">
-                    <strong>DNI: </strong><span>{persona.dni}</span><br/>
-                    <strong>Nombre: </strong><span>{persona.nombre}</span><br/>
-                    <strong>apellido: </strong><span>{persona.apellido}</span>
+                    <strong>DNI: </strong><span>{alumno.dni}</span><br/>
+                    <strong>Nombre: </strong><span>{alumno.nombre}</span><br/>
+                    <strong>apellido: </strong><span>{alumno.apellido}</span>
                     <hr/>
                     </div> 
                   </div>
@@ -55,4 +53,4 @@ class PersonaGrid extends React.Component {
   }
 }
 
-export default PersonaGrid;
+export default AlumnoGrid;
