@@ -1,89 +1,90 @@
 require("rootpath")();
-const express = require('express');
+const express = require("express");
 const app = express();
 
 const cursoDb = require("../datasource/cursoDB.js");
 
+app.get("/", getAll);
 
-app.get('/', getAll);
+app.get("/:id", getByidc);
 
-app.get('/:idcurso', getByidc);
+app.post("/", create);
 
-app.post('/', create);
+app.put("/:id", update);
 
-app.put('/:idcurso', update);
+app.delete("/del/:id", eliminar);
 
-app.delete('/del/:idcurso', eliminar);
-
-app.delete('/:idcurso', eliminacionlogica);
+app.delete("/:id", eliminacionlogica);
 
 // Metododo para listar todos los cursos
 function getAll(req, res) {
-    cursoDb.getAll(function (err, result) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.json(result);
-        }
-    });
+  cursoDb.getAll(function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(result);
+    }
+  });
 }
 // Metodo para buscar cursos por su id
 function getByidc(req, res) {
-    cursoDb.getByidc(req.params.idcurso,function (err, result) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.json(result);
-        }
-    });
+  cursoDb.getByidc(req.params.id, function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(result);
+    }
+  });
 }
 // Metodo para agregar cursos
 function create(req, res) {
-    cursoDb.create(req.body, function (err, result) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.json(result);
-        }
-    });
+  cursoDb.create(req.body, function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(result);
+    }
+  });
 }
 // Metodo para modificar cursos
 function update(req, res) {
-    cursoDb.update(req.params.idcurso, req.body, function (result) {
-        if (result.code == 3) {
-            res.status(500).send(err);
-        } else if (result.code == 2) {
-            res.status(404).json(result);
-        } else {
-            res.json(result);
-        }
-    });
+  cursoDb.update(req.params.id, req.body, function (result) {
+    if (result.code == 3) {
+      res.status(500).send(result);
+      res.status(500).send(result.message);
+    } else if (result.code == 2) {
+      res.status(404).json(result);
+    } else {
+      res.json(result);
+    }
+  });
 }
+
 // Metodo par eliminar fisicmente cursos de la base de datos
 function eliminar(req, res) {
-    cursoDb.delete(req.params.idcurso,  function (err, result) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            if (result.detail.affectedRows == 0) {
-                res.status(404).json(result);
-            } else {
-                res.json(result);
-            }
-        }
-    });
+  cursoDb.delete(req.params.id, function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      if (result.detail.affectedRows == 0) {
+        res.status(404).json(result);
+      } else {
+        res.json(result);
+      }
+    }
+  });
 }
 // Metodo par eliminar cursos cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    cursoDb.logdelete(req.params.idcurso, function (result) {
-        if (result.code == 3) {
-            res.status(500).send(err);
-        } else if (result.code == 2) {
-                res.status(404).json(result);  
-        } else if (result.code == 1) {      
-            res.json(result);
-        }
-    });
+  cursoDb.logdelete(req.params.id, function (result) {
+    if (result.code == 3) {
+      res.status(500).send(result);
+    } else if (result.code == 2) {
+      res.status(404).json(result);
+    } else if (result.code == 1) {
+      res.json(result);
+    }
+  });
 }
 
 module.exports = app;
