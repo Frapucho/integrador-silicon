@@ -10,12 +10,14 @@ app.use(morgan("tiny"));
 morgan(":method :url :status :res[content-length] - :response-time ms");
 
 //alumno
-/* app.get("/", function (req, res) {
-    res.send("ALPHA-SILICON");
+  app.get("/", function (req, res) {
+  res.send("ALPHA-SILICON");
 });
 
-const personaCont = require("./src/controller/alumnoController.js");
-app.use("/api/alumno",alumnoCont); */
+const alumnoCont = require("./src/controller/alumnoController");
+app.use("/api/alumnos", alumnoCont);
+
+
 
 //curso
 app.get("/", function (req, res) {

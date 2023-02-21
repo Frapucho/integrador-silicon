@@ -1,6 +1,6 @@
 {
     "server": {
-        "port": 3306
+        "port": 8080
     },
     "database": {
         "host": "localhost",

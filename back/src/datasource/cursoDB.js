@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const config = require("../config/config.json");
 
-//entra DB
+
 var connection = mysql.createConnection(config.database);
 
 connection.connect((err) => {
@@ -11,7 +11,7 @@ connection.connect((err) => {
     console.log("DB Conectada correctamente");
   }
 });
-//en este punto deberia haber entrado
+
 
 var cursoDb = {};
 
