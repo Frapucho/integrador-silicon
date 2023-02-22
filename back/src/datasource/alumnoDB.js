@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const config = require("../config/config.json");
 
-//conectarnos a nuestra DB
+
 var connection = mysql.createConnection(config.database);
 
 connection.connect((err) => {
@@ -11,13 +11,15 @@ connection.connect((err) => {
         console.log("DB Conectada correctamente");
     }
 });
-//fin de conexion db
+
 
 var alumnoDb = {};
 
 
 alumnoDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM alumno where estado >=1", function (err, result, fields) {
+    connection.query(
+        "SELECT * FROM alumnos where id >=1",
+         function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -30,74 +32,79 @@ alumnoDb.getAll = function (funCallback) {
     });
 }
 
-alumnoDb.getByDni = function (dni,funCallback) {
-    connection.query("SELECT * FROM alumno WHERE dni=?",dni, function (err, result, fields) {
+alumnoDb.getByid = function (idalumno, funCallback) {
+    connection.query(
+        "SELECT * FROM alumno WHERE id=?",
+         idalumno, function (err, result, fields) {
         if (err) {
             funCallback({
-                message: "Surgio un problema, contactese con un administrador. Gracias",
+                message:
+                 "Surgio un problema, contactese con un administrador. Gracias",
                 detail: err
             });
             console.error(err);
         } else {
-            if(result.length>0){
+            if (result.length > 0) {
                 funCallback(undefined, result[0]);
-            }else{
+            } else {
                 funCallback({
-                    message: "No se encontro la persona"
+                    message: "No se encontro el alumno"
                 });
             }
-            
+
         }
     });
 }
 
-// REVISAR XFAVOR /////////////////////////////////////////////////(cambiar datos del pedido a db, me dio paja, estan desordenados)//////////////////////////////////////////////////////////
 
 alumnoDb.create = function (alumno, funCallback) {
-    var query = 'INSERT INTO alumno (dni,nombre,apellido,sexo,fecha_nacimiento) VALUES (?,?,?,?,?)'
-    var dbParams = [alumno.dni, alumno.nombre, alumno.apellido, alumno.sexo, alumno.fecha_nacimiento];
+    var query = 'INSERT INTO alumnos (id,nombre,apellido,dni) VALUES (?,?,?,?)'
+    var dbParams = [
+        alumno.id, 
+        alumno.nombre, 
+        alumno.apellido, 
+        alumno.dni
+    ];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
-            if(err.code == 'ER_DUP_ENTRY'){
+            if (err.code == 'ER_DUP_ENTRY') {
                 funCallback({
-                    message: `Ya existe el alumno con el DNI ${alumno.dni}`,
+                    message: `Ya existe el alumno con el ID ${alumno.id}`,
                     detail: err
                 });
-            }else{
+            } else {
                 funCallback({
                     message: "Surgio un problema, contactese con un administrador. Gracias",
                     detail: err
                 });
             }
-            
+
             console.error(err);
         } else {
             funCallback(undefined, {
-                message: `Se creo la persona ${alumno.apellido} ${alumno.nombre}`,
+                message: `Se creo el alumno ${alumno.apellido} ${alumno.nombre}`,
                 detail: result
             });
         }
     });
 }
 
-/**
- * 
- * @param {*} dni 
- * @param {*} persona 
- * @param {*} funCallback 
- *         retorna:
- *              code = 1 (EXITO)
- *              code = 2 (NOT FOUND) (NO encontro elemento)
- *              code = 3 (ERROR)
- * 
- */
-alumnoDb.update = function (dni, persona, funCallback) {
-    var query = 'UPDATE personas SET dni = ? , nombre = ?, apellido = ?,  sexo = ?, fecha_nacimiento = ?, estado = ? WHERE dni = ?'
-    var dbParams = [persona.dni, persona.nombre, persona.apellido, persona.sexo, persona.fecha_nacimiento, persona.estado, dni];
+
+alumnoDb.update = function (id, alumno, funCallback) {
+    var query = 
+    'UPDATE alumnos SET id = ? , nombre = ?, apellido = ?,  dni = ? WHERE id = ?'
+    var dbParams = [
+        alumno.id, 
+        alumno.nombre, 
+        alumno.apellido, 
+        alumno.dni, 
+        id
+    ];
+
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             funCallback({
-                code:3,
+                code: 3,
                 message: "Surgio un problema, contactese con un administrador. Gracias",
                 detail: err
             });
@@ -105,14 +112,14 @@ alumnoDb.update = function (dni, persona, funCallback) {
         } else {
             if (result.affectedRows == 0) {
                 funCallback({
-                    code:2,
-                    message: `No se encontro la persona ${dni}`,
+                    code: 2,
+                    message: `No se encontro el alumno ${id}`,
                     detail: result
                 });
             } else {
                 funCallback({
-                    code:1,
-                    message: `Se modifico la persona ${persona.apellido} ${persona.nombre}`,
+                    code: 1,
+                    message: `Se modifico el alumno ${alumno.apellido} ${alumno.nombre}`,
                     detail: result
                 });
             }
@@ -122,9 +129,9 @@ alumnoDb.update = function (dni, persona, funCallback) {
 }
 
 
-alumnoDb.delete = function(dni,funCallback){
-    var query = 'DELETE FROM personas WHERE dni = ?'
-    connection.query(query, dni, function (err, result, fields) {
+alumnoDb.delete = function (id, funCallback) {
+    var query = 'DELETE FROM alumnos WHERE id = ?'
+    connection.query(query, id, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -133,13 +140,13 @@ alumnoDb.delete = function(dni,funCallback){
             console.error(err);
         } else {
             if (result.affectedRows == 0) {
-                funCallback(undefined,{
-                    message: `No se encontro la persona ${dni}`,
+                funCallback(undefined, {
+                    message: `No se encontro el alumno ${id}`,
                     detail: result
                 });
             } else {
-                funCallback(undefined,{
-                    message: `Se elimino la persona ${dni}`,
+                funCallback(undefined, {
+                    message: `Se elimino el alumno ${id}`,
                     detail: result
                 });
             }
@@ -147,42 +154,38 @@ alumnoDb.delete = function(dni,funCallback){
     });
 }
 
-/**
- *  
- * @param {*} idpersona 
- * @param {*} funCallback
- *         retorna:
- *              code = 1 (EXITO)
- *              code = 2 (NOT FOUND) (NO encontro elemento)
- *              code = 3 (ERROR)
- * 
- */
-alumnoDb.logdelete = function (idpersona, funCallback) {
-    connection.query("UPDATE personas SET estado = 0 WHERE idpersona = ?",idpersona, function (err, result, fields) {
+// CREO QUE NO ENTRA EN LA CONSIGNA, SE PUEDE BORRAR LO COMENTADO
+
+/* alumnoDb.logdelete = function (id, funCallback) {
+    console.log(id);
+    connection.query(
+        "UPDATE alumnos SET activo = 0 WHERE id = ?", 
+        [id], 
+        function (err, result, fields) {
         if (err) {
             funCallback({
-                code:3,
+                code: 3,
                 message: "Surgio un problema, contactese con un administrador. Gracias",
                 detail: err
-            }); 
+            });
             console.error(err);
         } else {
             if (result.affectedRows == 0) {
                 funCallback({
-                    code:2,
-                    message: `No se encontro el id  ${idpersona} de la persona`,
+                    code: 2,
+                    message: `No se encontro el id  ${id} del alumno`,
                     detail: result
-                }); 
+                });
             } else {
-         //       console.error(err);
-                    funCallback({
-                    code:1,
-                    message: `Se modifico la persona con el id ${idpersona}`,
+                //       console.error(err);
+                funCallback({
+                    code: 1,
+                    message: `Se modifico el alumno con el id ${id}`,
                     detail: result
-                }); 
+                });
             }
         }
     });
-}
+} */
 
 module.exports = alumnoDb;
