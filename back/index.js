@@ -1,3 +1,5 @@
+
+=======
 require("rootpath")();
 const express = require("express");
 const app = express();
@@ -46,3 +48,4 @@ app.listen(config.server.port, function (err) {
     console.log(`Server iniciado en puerto:${config.server.port}`);
   }
 });
+
