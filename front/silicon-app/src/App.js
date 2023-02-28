@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-<<<<<<< HEAD
 import Home from "./components/home";
 import Nav from "./components/Nav";
 import Login from "./components/Login";
@@ -18,16 +17,6 @@ import AlumnoList from "./components/alumno/AlumnoList";
 import Cursos from "./components/cursos/Cursos";
 import CursosList from "./components/cursos/CursosList";
 import CursosForm from "./components/cursos/CursosForm";
-=======
-import Home from "./home";
-import Menu from "./Menu";
-import Login from './Login';
-import AlumnoGest from "./alumno/AlumnoGest";
-import AlumnoGrid from "./alumno/AlumnoGrid";
-import AlumnoList from "./alumno/AlumnoList";
-import About from "./About";
-
->>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a
 
 function App() {
   return (
@@ -40,12 +29,7 @@ function App() {
           <Route path="/alumno/grid" element={<AlumnoGrid />} />
           <Route path="/alumno/gest/:dni" element={<AlumnoGest />} />
           <Route path="/alumno/gest" element={<AlumnoGest />} />
-<<<<<<< HEAD
           <Route path="/Login" element={<Login />} />
-=======
-          <Route path="/Login" element={<Login />} /> 
-          <Route path="/About" element={<About />} /> 
->>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a
           <Route path="/texto/:text" element={<Texto />} />
 
           <Route path="/cursos" element={<Cursos />} />
