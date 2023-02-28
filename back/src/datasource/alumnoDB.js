@@ -13,10 +13,10 @@ connection.connect((err) => {
 });
 
 
-var alumnoDb = {};
+var alumnoDB = {};
 
 
-alumnoDb.getAll = function (funCallback) {
+alumnoDB.getAll = function (funCallback) {
     connection.query(
         "SELECT * FROM alumnos where id >=1",
          function (err, result, fields) {
@@ -32,7 +32,7 @@ alumnoDb.getAll = function (funCallback) {
     });
 }
 
-alumnoDb.getByid = function (idalumno, funCallback) {
+alumnoDB.getByid = function (idalumno, funCallback) {
     connection.query(
         "SELECT * FROM alumno WHERE id=?",
          idalumno, function (err, result, fields) {
@@ -57,7 +57,7 @@ alumnoDb.getByid = function (idalumno, funCallback) {
 }
 
 
-alumnoDb.create = function (alumno, funCallback) {
+alumnoDB.create = function (alumno, funCallback) {
     var query = 'INSERT INTO alumnos (id,nombre,apellido,dni) VALUES (?,?,?,?)'
     var dbParams = [
         alumno.id, 
@@ -90,7 +90,7 @@ alumnoDb.create = function (alumno, funCallback) {
 }
 
 
-alumnoDb.update = function (id, alumno, funCallback) {
+alumnoDB.update = function (id, alumno, funCallback) {
     var query = 
     'UPDATE alumnos SET id = ? , nombre = ?, apellido = ?,  dni = ? WHERE id = ?'
     var dbParams = [
@@ -129,7 +129,7 @@ alumnoDb.update = function (id, alumno, funCallback) {
 }
 
 
-alumnoDb.delete = function (id, funCallback) {
+alumnoDB.delete = function (id, funCallback) {
     var query = 'DELETE FROM alumnos WHERE id = ?'
     connection.query(query, id, function (err, result, fields) {
         if (err) {
@@ -150,6 +150,29 @@ alumnoDb.delete = function (id, funCallback) {
                     detail: result
                 });
             }
+        }
+    });
+}
+
+//se agrega funcion
+
+alumnoDB.findByNickname = function (nickname,funCallback) {
+    connection.query("SELECT * FROM usuarios WHERE nickname=?",[nickname], function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            if(result.length>0){
+                funCallback(undefined, result[0]);
+            }else{
+                funCallback({
+                    message: "No se encontro el usuario"
+                });
+            }
+            
         }
     });
 }
@@ -188,4 +211,4 @@ alumnoDb.delete = function (id, funCallback) {
     });
 } */
 
-module.exports = alumnoDb;
+module.exports = alumnoDB;
