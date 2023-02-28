@@ -15,6 +15,7 @@ import Login from './Login';
 import AlumnoGest from "./alumno/AlumnoGest";
 import AlumnoGrid from "./alumno/AlumnoGrid";
 import AlumnoList from "./alumno/AlumnoList";
+import About from "./About";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/alumno/gest/:dni" element={<AlumnoGest />} />
           <Route path="/alumno/gest" element={<AlumnoGest />} />
           <Route path="/Login" element={<Login />} /> 
+          <Route path="/About" element={<About />} /> 
           <Route path="/texto/:text" element={<Texto />} />
         </Routes>
       </div>

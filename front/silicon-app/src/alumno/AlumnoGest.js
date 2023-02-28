@@ -1,141 +1,62 @@
-import React from "react";
-import Menu from "../Menu";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-class InternalAlumnoGest extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dni: '',
-      nombre: '',
-      apellido: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const AlumnoGest = () => {
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [dni, setDNI] = useState("");
+  
 
-  componentDidMount() {
-    if (this.props.params.dni) {
-      let request = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          "Accept": 'application/json'
-        }
-      };
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-      fetch(`http://localhost:8080/api/alumno/${this.props.params.dni}`, request)
-        .then(res => {
-          return res.json().then(body => {
-            return {
-              status: res.status,
-              ok: res.ok,
-              headers: res.headers,
-              body: body
-            };
-          });
-        })
-        .then(result => {
-          if (result.ok) {
-            this.setState({
-              dni: result.body.dni,
-              nombre: result.body.nombre,
-              apellido: result.body.apellido,
-            });
-          } else {
-            toast.error(result.body.message, {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        })
-    } else {
-      this.setState({
-        dni: '',
-        nombre: '',
-        apellido: ''
-      });
-    }
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let data = {
-      dni: this.state.dni,
-      nombre: this.state.nombre,
-      apellido: this.state.apellido
-    };
-
-    let request = {
-      method: this.props.params.dni ? 'PUT' : 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        "Accept": 'application/json'
+  useEffect(() => {
+    const fetchAlumno = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/alumnos/${id}`);
+        const alumno = await response.json();
+        setNombre(alumno.nombre);
+        setApellido(alumno.apellido);
+        setDNI(alumno.dni);
+        
+      } catch (error) {
+        console.error(error);
+        alert("Error al cargar el alumno");
       }
     };
+    if (id) {
+      fetchAlumno();
+    }
+  }, [id]);
 
-    const url = this.props.params.dni ? `http://localhost:8080/api/alumno/${this.props.params.dni}` : "http://localhost:8080/api/alumno";
-
-    fetch(url, request)
-      .then(res => {
-        return res.json().then(body => {
-          return {
-            status: res.status,
-            ok: res.ok,
-            headers: res.headers,
-            body: body
-          };
-        });
-      })
-      .then(result => {
-        if (result.ok) {
-          toast.success(result.body.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          this.props.navigate("/alumno/list");
-        } else {
-          toast.error(result.body.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      },
-        (error) => {
-          console.log(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newAlumno = { nombre, apellido, dni };
+    try {
+      const response = await fetch(
+        id
+          ? `http://localhost:8080/api/alumnos/${id}`
+          : "http://localhost:8080/api/alumnos",
+        {
+          method: id ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAlumno),
         }
       );
-  }
+      if (response.ok) {
+        navigate(-1);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al guardar el alumno");
+    }
+  };
 
-  render() {
-    return (
+  return (
 
-      <div>
+    <div>  
         <div class="container py-5 h-100">
           <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-8 col-lg-7 col-xl-6">
@@ -143,37 +64,31 @@ class InternalAlumnoGest extends React.Component {
                 class="img-fluid" alt="Phone image" />
             </div>
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-              <form>
+              <form onSubmit={handleSubmit}>
 
                 <div class="form-outline mb-4">
                   <label htmlFor="dni" className="form-label">DNI</label>
-                  <input type="text" className="form-control" id="dni" name="dni" value={this.state.dni} onChange={this.handleChange} />
+                  <input type="text" className="form-control" id="dni" value={dni} onChange={(e) => setDNI(e.target.value)}required />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label htmlFor="nombre" className="form-label">Nombre:</label>
-                  <input type="text" className="form-control" id="nombre" name="nombre" value={this.state.nombre} onChange={this.handleChange} />
+                  <input type="text" className="form-control" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)}required />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label htmlFor="apellido" className="form-label">Apellido:</label>
-                  <input type="text" className="form-control" id="apellido" name="apellido" value={this.state.apellido} onChange={this.handleChange} />
+                  <input type="text" className="form-control" id="apellido" value={apellido} onChange={(e) => setApellido(e.target.value)}required />
                 </div>
 
-                <div class="form-outline mb-4">
-                  <label htmlFor="apellido" className="form-label">Correo Electronico:</label>
-                  <input type="text" className="form-control" id="email" name="email" value={this.state.email} onChange={this.handleChange} />
-                </div>
-
-
+             
 
                 <button type="submit" className="btn btn-primary" >
+                {id ? "Editar Alumno" : "Agregar Alumno"}
                   <span class="material-symbols-outlined center-align" >
                     save
                   </span>
-                  <span>
-                    Guardar
-                  </span>
+                  
                 </button>
 
               </form>
@@ -181,19 +96,10 @@ class InternalAlumnoGest extends React.Component {
           </div>
         </div>
       </div>
+    
+  );
+};
 
 
-
-    );
-  }
-}
-
-
-export function AlumnoGest(props) {
-  const navigate = useNavigate();
-  const params = useParams();
-
-  return <InternalAlumnoGest navigate={navigate} params={params} />
-}
 
 export default AlumnoGest;

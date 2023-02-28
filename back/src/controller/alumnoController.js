@@ -1,8 +1,14 @@
 require("rootpath")();
-const express = require('express');
+/* const express = require('express');
 const app = express();
 
+ */
+var express = require('express')
+var cors = require('cors')
+var app = express()
+app.use(cors())
 const alumnoDb = require("../datasource/alumnoDB.js");
+
 
 
 app.get('/', getAll);
@@ -27,7 +33,7 @@ function getAll(req, res) {
         }
     });
 }
-// Metodo para buscar alumnos por su dni
+// Metodo para buscar alumnos por su id
 function getByid(req, res) {
     alumnoDb.getByid(req.params.id,function (err, result) {
         if (err) {

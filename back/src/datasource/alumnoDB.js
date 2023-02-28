@@ -18,7 +18,7 @@ var alumnoDb = {};
 
 alumnoDb.getAll = function (funCallback) {
     connection.query(
-        "SELECT * FROM alumnos where id >=1",
+        "SELECT * FROM alumnos",
          function (err, result, fields) {
         if (err) {
             funCallback({

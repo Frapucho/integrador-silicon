@@ -23,12 +23,7 @@ function Menu() {
                         <li className="nav-item">
                             <Link to="/alumno/list" className="nav-link">Listar Alumnos</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to="/alumno/grid" className="nav-link">Grilla de Alumnos</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/alumno/gest" className="nav-link">Gestion de Alumnos</Link>
-                        </li>
+                        
                         <li className="nav-item">
                             <Link to="/login" className="nav-link">Ingresar</Link>
                         </li>

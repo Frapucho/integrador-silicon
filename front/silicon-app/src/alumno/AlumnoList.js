@@ -10,7 +10,7 @@ class AlumnoList extends React.Component {
     this.state = {
       alumnoToDelete:{},
       modalConfirmarEliminacion:false,
-      alumno: []
+      alumnos: []
     };
     this.onDelete = this.onDelete.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -38,7 +38,7 @@ class AlumnoList extends React.Component {
       }
     };
 
-    fetch(`http://localhost:8080/api/alumno/${this.state.alumnoToDelete.dni}`, request)
+    fetch(`http://localhost:8080/api/alumnos/del/${this.state.alumnoToDelete.id}`, request)
       .then(res => {
         return res.json().then(body => {
           return {
@@ -83,10 +83,10 @@ class AlumnoList extends React.Component {
       headers: {
         'Content-Type': 'application/json',
         "Accept": 'application/json',
-        "authorization":sessionStorage.getItem('token')
+         "authorization":sessionStorage.getItem('token')
       }
     }; 
-    fetch("http://localhost:8080/api/alumno",request)
+    fetch("http://localhost:8080/api/alumnos",request)
     .then(res => {
       return res.json().then(body => {
         return {
@@ -136,14 +136,14 @@ class AlumnoList extends React.Component {
           <td>{alumno.nombre}</td>
           <td>{alumno.apellido}</td>
           <td>
-            <Link to={`/alumno/gest/${alumno.dni}`}>
-              <button className="btn btn-primary">
+            <Link to={`/alumno/gest/${alumno.id}`}>
+              <button className="btn btn-outline-warning">
                 <span class="material-symbols-outlined">
                   edit
                 </span>
               </button>
             </Link>
-            <button type="submit" className="btn btn-danger" onClick={() => this.handleOpen(alumno)}>
+            <button type="submit" className="btn btn-outline-danger" onClick={() => this.handleOpen(alumno)}>
               <span class="material-symbols-outlined center-align">
                 delete_forever
               </span>
@@ -157,8 +157,11 @@ class AlumnoList extends React.Component {
 
     return (
       <>
+      <div>
         <h1>Lista de alumnos</h1>
-        <table className="table table-striped">
+        
+      </div>
+        <table className="table table-bordered" >
           <thead>
             <tr>
               <th>DNI</th>
@@ -171,23 +174,30 @@ class AlumnoList extends React.Component {
             {rowsTable}
           </tbody>
         </table>
+        <div className="row">
+        <div className="col-2 text-end w-100">
+          <Link to="/alumno/gest" className="btn btn-primary">
+            Nuevo alumno
+          </Link>
+        </div>
+      </div>
         <Modal
           show={this.state.modalConfirmarEliminacion}
           onHide={this.handleClose}
           backdrop="static"
           keyboard={false}
         >
-          <Modal.Header closeButton className="dark-content">
+          <Modal.Header closeButton className="light-content">
             <Modal.Title>Confirmar eliminacion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             Esta seguro que desea eliminar el alumno: <strong>{this.state.alumnoToDelete.apellido} {this.state.alumnoToDelete.nombre}</strong>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
+            <Button variant="outline-warning" onClick={this.handleClose}>
               Cerrar
             </Button>
-            <Button variant="primary" onClick={this.onDelete}>Eliminar</Button>
+            <Button variant="outline-danger" onClick={this.onDelete}>Eliminar</Button>
           </Modal.Footer>
         </Modal>
       </>
