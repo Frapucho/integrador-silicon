@@ -2,7 +2,7 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const alumnoDb = require("../datasource/alumnoDb.js");
+const alumnoDB = require("../datasource/alumnoDB.js");
 
 //aca se puso seguridad
 const securityCont = require("../seguridad/security.js");
@@ -22,7 +22,7 @@ app.delete('/del/:id',securityCont.verificarToken, eliminar);
 
 // Metododo para listar todos los alumnos 
 function getAll(req, res) {
-    alumnoDb.getAll(function (err, result) {
+    alumnoDB.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -32,7 +32,7 @@ function getAll(req, res) {
 }
 // Metodo para buscar alumnos por su dni
 function getByid(req, res) {
-    alumnoDb.getByid(req.params.id,function (err, result) {
+    alumnoDB.getByid(req.params.id,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -42,7 +42,7 @@ function getByid(req, res) {
 }
 // Metodo para agregar alumnos
 function create(req, res) {
-    alumnoDb.create(req.body, function (err, result) {
+    alumnoDB.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -52,7 +52,7 @@ function create(req, res) {
 }
 // Metodo para modificar alumnos
 function update(req, res) {
-    alumnoDb.update(req.params.id, req.body, function (result) {
+    alumnoDB.update(req.params.id, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -64,7 +64,7 @@ function update(req, res) {
 }
 // Metodo par eliminar fisicamente alumnos de la base de datos
 function eliminar(req, res) {
-    alumnoDb.delete(req.params.id,  function (err, result) {
+    alumnoDB.delete(req.params.id,  function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -78,7 +78,7 @@ function eliminar(req, res) {
 }
 // Metodo par eliminar alumnos cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    alumnoDb.logdelete(req.params.id, function (result) {
+    alumnoDB.logdelete(req.params.id, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
