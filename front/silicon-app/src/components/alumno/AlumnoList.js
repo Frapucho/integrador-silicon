@@ -8,9 +8,15 @@ class AlumnoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+<<<<<<< HEAD:front/silicon-app/src/components/alumno/AlumnoList.js
       alumnoToDelete: {},
       modalConfirmarEliminacion: false,
       alumno: [],
+=======
+      alumnoToDelete:{},
+      modalConfirmarEliminacion:false,
+      alumnos: []
+>>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a:front/silicon-app/src/alumno/AlumnoList.js
     };
     this.onDelete = this.onDelete.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -38,12 +44,18 @@ class AlumnoList extends React.Component {
       },
     };
 
+<<<<<<< HEAD:front/silicon-app/src/components/alumno/AlumnoList.js
     fetch(
       `http://localhost:8080/api/alumno/${this.state.alumnoToDelete.dni}`,
       request
     )
       .then((res) => {
         return res.json().then((body) => {
+=======
+    fetch(`http://localhost:8080/api/alumnos/del/${this.state.alumnoToDelete.id}`, request)
+      .then(res => {
+        return res.json().then(body => {
+>>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a:front/silicon-app/src/alumno/AlumnoList.js
           return {
             status: res.status,
             ok: res.ok,
@@ -84,9 +96,47 @@ class AlumnoList extends React.Component {
     let request = {
       method: "GET",
       headers: {
+<<<<<<< HEAD:front/silicon-app/src/components/alumno/AlumnoList.js
         "Content-Type": "application/json",
         Accept: "application/json",
         authorization: sessionStorage.getItem("token"),
+=======
+        'Content-Type': 'application/json',
+        "Accept": 'application/json',
+         "authorization":sessionStorage.getItem('token')
+      }
+    }; 
+    fetch("http://localhost:8080/api/alumnos",request)
+    .then(res => {
+      return res.json().then(body => {
+        return {
+          status: res.status,
+          ok: res.ok,
+          headers: res.headers,
+          body: body
+        };
+      });
+    })
+      .then(result => {
+        if (result.ok) {
+          this.setState({
+            modalConfirmarEliminacion: false,
+            alumnos: result.body
+          });
+        } else {
+          toast.error(result.body.message, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+        
+>>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a:front/silicon-app/src/alumno/AlumnoList.js
       },
     };
     fetch("http://localhost:8080/api/alumno", request)
@@ -139,6 +189,7 @@ class AlumnoList extends React.Component {
           <td>{alumno.nombre}</td>
           <td>{alumno.apellido}</td>
           <td>
+<<<<<<< HEAD:front/silicon-app/src/components/alumno/AlumnoList.js
             <Link to={`/alumno/gest/${alumno.dni}`}>
               <button className="btn btn-primary">
                 <span class="material-symbols-outlined">edit</span>
@@ -149,6 +200,16 @@ class AlumnoList extends React.Component {
               className="btn btn-danger"
               onClick={() => this.handleOpen(alumno)}
             >
+=======
+            <Link to={`/alumno/gest/${alumno.id}`}>
+              <button className="btn btn-outline-warning">
+                <span class="material-symbols-outlined">
+                  edit
+                </span>
+              </button>
+            </Link>
+            <button type="submit" className="btn btn-outline-danger" onClick={() => this.handleOpen(alumno)}>
+>>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a:front/silicon-app/src/alumno/AlumnoList.js
               <span class="material-symbols-outlined center-align">
                 delete_forever
               </span>
@@ -161,8 +222,11 @@ class AlumnoList extends React.Component {
 
     return (
       <>
+      <div>
         <h1>Lista de alumnos</h1>
-        <table className="table table-striped">
+        
+      </div>
+        <table className="table table-bordered" >
           <thead>
             <tr>
               <th>DNI</th>
@@ -173,13 +237,20 @@ class AlumnoList extends React.Component {
           </thead>
           <tbody>{rowsTable}</tbody>
         </table>
+        <div className="row">
+        <div className="col-2 text-end w-100">
+          <Link to="/alumno/gest/:" className="btn btn-primary">
+            Nuevo alumno
+          </Link>
+        </div>
+      </div>
         <Modal
           show={this.state.modalConfirmarEliminacion}
           onHide={this.handleClose}
           backdrop="static"
           keyboard={false}
         >
-          <Modal.Header closeButton className="dark-content">
+          <Modal.Header closeButton className="light-content">
             <Modal.Title>Confirmar eliminacion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -190,12 +261,16 @@ class AlumnoList extends React.Component {
             </strong>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
+            <Button variant="outline-warning" onClick={this.handleClose}>
               Cerrar
             </Button>
+<<<<<<< HEAD:front/silicon-app/src/components/alumno/AlumnoList.js
             <Button variant="primary" onClick={this.onDelete}>
               Eliminar
             </Button>
+=======
+            <Button variant="outline-danger" onClick={this.onDelete}>Eliminar</Button>
+>>>>>>> fdc59c1ab7ee5a361ee1647ab6d00573d530e67a:front/silicon-app/src/alumno/AlumnoList.js
           </Modal.Footer>
         </Modal>
       </>
