@@ -2,18 +2,21 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const alumnoDb = require("../datasource/alumnoDB.js");
+const alumnoDb = require("../datasource/alumnoDb.js");
+
+//aca se puso seguridad
+const securityCont = require("../seguridad/security.js");
 
 
-app.get('/', getAll);
+app.get('/',securityCont.verificarToken, getAll);
 
-app.get('/:id', getByid);
+app.get('/:id',securityCont.verificarToken, getByid);
 
-app.post('/', create);
+app.post('/',securityCont.verificarToken, create);
 
-app.put('/:id', update);
+app.put('/:id',securityCont.verificarToken, update);
 
-app.delete('/del/:id', eliminar);
+app.delete('/del/:id',securityCont.verificarToken, eliminar);
 
 // app.delete('/:id', eliminacionlogica);
 
