@@ -176,7 +176,7 @@ class AlumnoList extends React.Component {
         </table>
         <div className="row">
         <div className="col-2 text-end w-100">
-          <Link to="/alumno/gest" className="btn btn-primary">
+          <Link to="/alumno/gest/${alumno.id}" className="btn btn-primary">
             Nuevo alumno
           </Link>
         </div>
