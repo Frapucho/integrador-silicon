@@ -1,5 +1,3 @@
-
-=======
 require("rootpath")();
 const express = require("express");
 const app = express();
@@ -20,14 +18,12 @@ app.use(morgan("tiny"));
 morgan(":method :url :status :res[content-length] - :response-time ms");
 
 //alumno
-  app.get("/", function (req, res) {
+app.get("/", function (req, res) {
   res.send("ALPHA-SILICON");
 });
 
 const alumnoCont = require("./src/controller/alumnoController");
 app.use("/api/alumnos", alumnoCont);
-
-
 
 //curso
 app.get("/", function (req, res) {
@@ -38,8 +34,8 @@ const cursoCont = require("./src/controller/cursoController");
 app.use("/api/cursos", cursoCont);
 
 //se agrego seguridad
-const securityCont = require("./src/seguridad/security");
-app.use("/api/security",securityCont.app);
+const securityCont = require("./src/seguridad/seguridad");
+app.use("/api/ingresar", securityCont.app);
 
 app.listen(config.server.port, function (err) {
   if (err) {
@@ -48,4 +44,3 @@ app.listen(config.server.port, function (err) {
     console.log(`Server iniciado en puerto:${config.server.port}`);
   }
 });
-

@@ -2,19 +2,18 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
   useParams,
   useSearchParams,
   useNavigate,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import Home from "./home";
-import Menu from "./Menu";
-import Login from "./Login";
-import AlumnoGest from "./alumno/AlumnoGest";
-import AlumnoGrid from "./alumno/AlumnoGrid";
-import AlumnoList from "./alumno/AlumnoList";
+import Home from "./components/home";
+import Nav from "./components/Nav";
+import Login from "./components/Login";
+import AlumnoGest from "./components/alumno/AlumnoGest";
+import AlumnoGrid from "./components/alumno/AlumnoGrid";
+import AlumnoList from "./components/alumno/AlumnoList";
 import Cursos from "./components/cursos/Cursos";
 import CursosList from "./components/cursos/CursosList";
 import CursosForm from "./components/cursos/CursosForm";
@@ -22,7 +21,7 @@ import CursosForm from "./components/cursos/CursosForm";
 function App() {
   return (
     <BrowserRouter>
-      <Menu />
+      <Nav />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -54,7 +53,9 @@ function Texto() {
   // }, 5000);
   return (
     <>
-      <Menu />
+      <header>
+        <Nav />
+      </header>
       <div className={mode === "dark" ? "dark-content" : ""}>
         Texto Parametro: {text}
         <br />

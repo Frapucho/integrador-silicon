@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import login from "./Login";
 
-function Menu() {
+function Nav() {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -70,4 +70,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default Nav;
