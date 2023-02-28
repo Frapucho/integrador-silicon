@@ -3,18 +3,18 @@ const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const alumnoDb = require("../datasource/alumnoDb.js");
+const alumnoDB = require("../datasource/alumnoDB.js");
 
 app.post("/login", login);
 
 function login(req, res) {
     const { nickname, password } = req.body;
-    alumnoDb.findByNickname(nickname, function (err, result) {
+    alumnoDB.findByNickname(nickname, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
             // investigar por que "iguales" no funciona
-            // const iguales = bcrypt.compareSync(password, result.password);
+            const iguales = bcrypt.compareSync(password, result.password);
             if (password === result?.password) {
                 let user = {
                     nickname: result.nickname,
