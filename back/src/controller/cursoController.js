@@ -3,18 +3,19 @@ const express = require("express");
 const app = express();
 
 const cursoDb = require("../datasource/cursoDB.js");
+const securityCont = require("../seguridad/seguridad");
 
-app.get("/", getAll);
+app.get("/", securityCont.verificarToken, getAll);
 
-app.get("/:id", getByidc);
+app.get("/:id", securityCont.verificarToken, getByidc);
 
-app.post("/", create);
+app.post("/", securityCont.verificarToken, create);
 
-app.put("/:id", update);
+app.put("/:id", securityCont.verificarToken, update);
 
-app.delete("/del/:id", eliminar);
+app.delete("/del/:id", securityCont.verificarToken, eliminar);
 
-app.delete("/:id", eliminacionlogica);
+app.delete("/:id", securityCont.verificarToken, eliminacionlogica);
 
 // Metododo para listar todos los cursos
 function getAll(req, res) {

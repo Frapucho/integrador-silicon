@@ -6,23 +6,44 @@ function CursoList() {
   const [cursos, setCursos] = useState([]);
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/cursos")
+    let request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    fetch("http://localhost:8080/api/cursos", request)
       .then((response) => response.json())
       .then((data) => setCursos(data))
       .catch((error) => console.error(error));
   }, []);
 
   function handleDeleteCurso(id) {
-    fetch(`http://localhost:8080/api/cursos/${id}`, {
+    let request = {
       method: "DELETE",
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    fetch(`http://localhost:8080/api/cursos/${id}`, request)
       .then((response) => response.json())
       .then((data) => {
         if (data.code === 1) {
           alert(data.message);
-          fetch("http://localhost:8080/api/cursos")
+          fetch("http://localhost:8080/api/cursos", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+          })
             .then((response) => response.json())
             .then((data) => setCursos(data))
             .catch((error) => console.error(error));
