@@ -1,7 +1,6 @@
 const mysql = require("mysql");
 const config = require("../config/config.json");
 
-
 var connection = mysql.createConnection(config.database);
 
 connection.connect((err) => {
@@ -12,25 +11,20 @@ connection.connect((err) => {
   }
 });
 
-
 var cursoDb = {};
 
 cursoDb.getAll = function (funCallback) {
-  connection.query(
-    "SELECT * FROM cursos where activo >=1",
-    function (err, result, fields) {
-      if (err) {
-        funCallback({
-          message:
-            "Surgio un problema, contactese con un administrador. Gracias",
-          detail: err,
-        });
-        console.error(err);
-      } else {
-        funCallback(undefined, result);
-      }
+  connection.query("SELECT * FROM cursos ", function (err, result, fields) {
+    if (err) {
+      funCallback({
+        message: "Surgio un problema, contactese con un administrador. Gracias",
+        detail: err,
+      });
+      console.error(err);
+    } else {
+      funCallback(undefined, result);
     }
-  );
+  });
 };
 
 cursoDb.getByidc = function (idcurso, funCallback) {

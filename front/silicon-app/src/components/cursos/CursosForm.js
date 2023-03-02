@@ -14,7 +14,14 @@ const CursosForm = () => {
   useEffect(() => {
     const fetchCurso = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/cursos/${id}`);
+        const response = await fetch(`http://localhost:8080/api/cursos/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+        });
         const curso = await response.json();
         setNombre(curso.nombre);
         setDescripcion(curso.descripcion);
@@ -34,15 +41,19 @@ const CursosForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newCurso = { nombre, descripcion, imagen, anio, activo };
+    console.log(newCurso);
     try {
       const response = await fetch(
         id
           ? `http://localhost:8080/api/cursos/${id}`
           : "http://localhost:8080/api/cursos",
+
         {
           method: id ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
           },
           body: JSON.stringify(newCurso),
         }
