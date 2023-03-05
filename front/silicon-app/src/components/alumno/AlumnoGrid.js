@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-class AlumnoList extends React.Component {
+class AlumnoGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,8 @@ class AlumnoList extends React.Component {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        "Accept": 'application/json'
+        "Accept": 'application/json',
+        authorization: localStorage.getItem("token")
       }
     };
 
@@ -83,10 +84,10 @@ class AlumnoList extends React.Component {
       headers: {
         'Content-Type': 'application/json',
         "Accept": 'application/json',
-         "authorization":sessionStorage.getItem('token')
+         "authorization":localStorage.getItem('token')
       }
     }; 
-    fetch("http://localhost:8080/api/alumnos",request)
+    fetch("http://localhost:8080/api/alumnos/",request)
     .then(res => {
       return res.json().then(body => {
         return {
@@ -206,4 +207,4 @@ class AlumnoList extends React.Component {
   }
 }
 
-export default AlumnoList;
+export default AlumnoGrid;

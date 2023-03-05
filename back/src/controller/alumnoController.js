@@ -3,20 +3,20 @@ const express = require("express");
 const app = express();
 
 const alumnoDB = require("../datasource/alumnoDB.js");
-
+const securityCont = require("../seguridad/seguridad");
 //aca se puso seguridad
 
-app.get("/", getAll);
+app.get("/", securityCont.verificarToken, getAll);
 
-app.get("/:id", getByid);
+app.get("/:id", securityCont.verificarToken, getByid);
 
-app.post("/", create);
+app.post("/", securityCont.verificarToken, create);
 
-app.put("/:id", update);
+app.put("/:id", securityCont.verificarToken, update);
 
-app.delete("/del/:id", eliminar);
+app.delete("/del/:id", securityCont.verificarToken, eliminar);
 
-// app.delete('/:id', eliminacionlogica);
+
 
 // Metododo para listar todos los alumnos
 function getAll(req, res) {
@@ -53,6 +53,7 @@ function update(req, res) {
   alumnoDB.update(req.params.id, req.body, function (result) {
     if (result.code == 3) {
       res.status(500).send(err);
+      res.status(500).send(result.message);
     } else if (result.code == 2) {
       res.status(404).json(result);
     } else {
@@ -74,17 +75,6 @@ function eliminar(req, res) {
     }
   });
 }
-// Metodo par eliminar alumnos cambiando el estado a 0
-function eliminacionlogica(req, res) {
-  alumnoDB.logdelete(req.params.id, function (result) {
-    if (result.code == 3) {
-      res.status(500).send(err);
-    } else if (result.code == 2) {
-      res.status(404).json(result);
-    } else if (result.code == 1) {
-      res.json(result);
-    }
-  });
-}
+
 
 module.exports = app;

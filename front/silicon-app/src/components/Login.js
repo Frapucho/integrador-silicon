@@ -156,7 +156,7 @@ class InternalLogin extends React.Component {
 
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg btn-block"
+                  className="btn btn-primary btn-lg btn-block" onClick={() =>  window.location.href = '/'}
                 >
                   Iniciar Sesion
                 </button>

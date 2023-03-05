@@ -12,7 +12,14 @@ const AlumnoGest = () => {
   useEffect(() => {
     const fetchAlumno = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/alumnos/${id}`);
+        const response = await fetch((`http://localhost:8080/api/alumnos/${id}`), {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+        }); 
         const alumno = await response.json();
         setNombre(alumno.nombre);
         setApellido(alumno.apellido);
@@ -39,6 +46,8 @@ const AlumnoGest = () => {
           method: id ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
           },
           body: JSON.stringify(newAlumno),
         }
