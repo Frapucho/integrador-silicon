@@ -12,7 +12,14 @@ const AlumnoGest = () => {
   useEffect(() => {
     const fetchAlumno = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/alumnos/${id}`);
+        const response = await fetch((`http://localhost:8080/api/alumnos/${id}`), {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+        }); 
         const alumno = await response.json();
         setNombre(alumno.nombre);
         setApellido(alumno.apellido);
@@ -39,6 +46,8 @@ const AlumnoGest = () => {
           method: id ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: localStorage.getItem("token"),
           },
           body: JSON.stringify(newAlumno),
         }
@@ -54,18 +63,18 @@ const AlumnoGest = () => {
 
   return (
     <div>
-      <div class="container py-5 h-100">
-        <div class="row d-flex align-items-center justify-content-center h-100">
-          <div class="col-md-8 col-lg-7 col-xl-6">
+      <div className="container py-5 h-100">
+        <div className="row d-flex align-items-center justify-content-center h-100">
+          <div className="col-md-8 col-lg-7 col-xl-6">
             <img
               src="https://allshopconnect.com/assets/img/apptype/CubeJekX/20200908165706.png"
-              class="img-fluid"
+              className="img-fluid"
               alt="Phone image"
             />
           </div>
-          <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
             <form onSubmit={handleSubmit}>
-              <div class="form-outline mb-4">
+              <div className="form-outline mb-4">
                 <label htmlFor="dni" className="form-label">
                   DNI
                 </label>
@@ -79,7 +88,7 @@ const AlumnoGest = () => {
                 />
               </div>
 
-              <div class="form-outline mb-4">
+              <div className="form-outline mb-4">
                 <label htmlFor="nombre" className="form-label">
                   Nombre:
                 </label>
@@ -93,7 +102,7 @@ const AlumnoGest = () => {
                 />
               </div>
 
-              <div class="form-outline mb-4">
+              <div className="form-outline mb-4">
                 <label htmlFor="apellido" className="form-label">
                   Apellido:
                 </label>
@@ -109,7 +118,7 @@ const AlumnoGest = () => {
 
               <button type="submit" className="btn btn-primary">
                 {id ? "Editar Alumno" : "Agregar Alumno"}
-                <span class="material-symbols-outlined center-align">save</span>
+                <span className="material-symbols-outlined center-align">save</span>
               </button>
             </form>
           </div>
