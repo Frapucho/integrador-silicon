@@ -65,7 +65,7 @@ class InternalLogin extends React.Component {
               theme: "light",
             });
 
-            this.props.navigate("/home");
+            window.location.href = "/home";
           } else {
             toast.error(result.body.message, {
               position: "bottom-right",
