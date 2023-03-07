@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import login from "./Login";
+import App from "../App.css";
+
+
+
 
 
 
@@ -10,14 +14,15 @@ function Nav() {
   if (token) {
     return (
       <>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-primary" 
+         >
           <div className="container">
             <Link to="/" className="navbar-brand">
               <img src="/logo.png" className="nav-img-main" />
             </Link>
             <button
               className="navbar-toggler"
-              type="button"
+              type="Button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
@@ -87,14 +92,14 @@ function Nav() {
 
     return (
       <>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-primary">
           <div className="container">
             <Link to="/" className="navbar-brand">
               <img src="/logo.png" className="nav-img-main" />
             </Link>
             <button
               className="navbar-toggler"
-              type="button"
+              type="Button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
@@ -103,10 +108,10 @@ function Nav() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent"  >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <Link to="/" className="nav-link active">
+                <li className="nav-item" >
+                  <Link to="/" className="nav-link active" >
                     Home
                   </Link>
                 </li>
