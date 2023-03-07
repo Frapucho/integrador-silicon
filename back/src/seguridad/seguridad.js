@@ -13,10 +13,8 @@ function login(req, res) {
     if (err) {
       res.status(500).send(err);
     } else {
-      // investigar por que "iguales" no funciona
-      // iguales no funciona porque no tenemos guardada en laa base  las contraseñas cifradas, despues hay que hacer eso
       const iguales = bcrypt.compareSync(password, result.password);
-      if (password === result?.password) {
+      if (iguales) {
         let user = {
           nickname: result.nickname,
           email: result.email,

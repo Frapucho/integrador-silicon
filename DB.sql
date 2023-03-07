@@ -39,8 +39,8 @@ INSERT INTO usuarios (email, nickname, password, rol) VALUES
 ('usuario1@ejemplo.com', 'usuario1', '123456', 'alumno'),
 ('usuario2@ejemplo.com', 'usuario2', '123456', 'alumno'),
 ('usuario3@ejemplo.com', 'usuario3', '123456', 'alumno'),
-('docente@docente.com', 'docente', 'docente', 'docente'),
-('admin@admin.com', 'admin', 'admin', 'admin');
+('docente@docente.com', 'docente', '$2y$15$76LcjDTFjDlJWwYKVjmQ4uu2zA43RmvzKQyakOvdkpg8naBAD3vxO', 'docente'),
+('admin@admin.com', 'admin', '$2y$15$36VxZWylRFyczHSrbPVBs.FMkyJp1kQ3OomhgcNivX/0bXTlI2wgi', 'admin');
 
 INSERT INTO alumnos (nombre, apellido, dni, id_usuario) VALUES
 ('Juan', 'Pérez', '12345678', 1),
