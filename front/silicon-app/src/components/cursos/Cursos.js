@@ -1,35 +1,86 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { useNavigate } from "react-router-dom";
 
 function Cursos() {
   const [cursos, setCursos] = useState([]);
 
+
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/cursos")
+    let request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    fetch("http://localhost:8080/api/cursos", request)
       .then((response) => response.json())
-      .then((data) => setCursos(data));
+      .then((data) => setCursos(data))
+      .catch((error) => console.error(error));
   }, []);
 
+  function handleDeleteCurso(id) {
+    let request = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    fetch(`http://localhost:8080/api/cursos/${id}`, request)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.code === 1) {
+          alert(data.message);
+          fetch("http://localhost:8080/api/cursos", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => setCursos(data))
+            .catch((error) => console.error(error));
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+
+
+
+
+
   return (
-    <div className="container">
-      <h1>Lista de cursos</h1>
+
+    <div className="container ">
+      <h1>Lista de Cursos</h1>
       <div className="row">
-        {cursos.map((curso) => (
-          <div className="col-md-4 mb-3" key={curso.id}>
-            <div className="card border-primary">
-              {/*               <img
-                src={curso.imagen}
-                className="card-img-top"
-                alt={curso.nombre}
-              /> */}
-              <h5 className="card-title  text-center p-2">{curso.nombre}</h5>
-              <div className="card-body">
-                <p className="card-text">{curso.descripcion}</p>
-                <p className="card-text">
-                  <small className="text-muted">{curso.anio}</small>
-                </p>
-              </div>
-            </div>
+        
+      {cursos.map((cursos) => (
+          <div className="col-4" key={cursos.id}>
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src={cursos.imagen} />
+              <Card.Body>
+                <Card.Title>{cursos.nombre}</Card.Title>
+                <Card.Text>
+                {cursos.descripcion}
+                </Card.Text>
+              
+              </Card.Body>
+            </Card>
           </div>
         ))}
       </div>
