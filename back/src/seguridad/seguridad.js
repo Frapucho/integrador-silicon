@@ -13,14 +13,21 @@ function login(req, res) {
     if (err) {
       res.status(500).send(err);
     } else {
+      console.log(password);
+      console.log(result.password);
       const iguales = bcrypt.compareSync(password, result.password);
+      // const iguales = bcrypt.compareSync(
+      //   "admin",
+      //   "$2a$12$h7uFvsdIEuPqSOrWF1xdledcqNldw9mfGCa2e1uvjv18HLbU87wDC"
+      // );
+      console.log(iguales);
       if (iguales) {
         let user = {
           nickname: result.nickname,
           email: result.email,
           rol: result.rol,
         };
-        jwt.sign(user, "secret", { expiresIn: "6000s" }, (err, token) => {
+        jwt.sign(user, "secret", { expiresIn: "7d" }, (err, token) => {
           if (!err) {
             res.json({
               datos: user,
