@@ -17,6 +17,7 @@ import AlumnoList from "./components/alumno/AlumnoList";
 import Cursos from "./components/cursos/Cursos";
 import CursosList from "./components/cursos/CursosList";
 import CursosForm from "./components/cursos/CursosForm";
+import About from "./About";
 
 function App() {
   return (
@@ -24,10 +25,11 @@ function App() {
       <Nav />
       <div className="container">
         <Routes>
+          <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />
           <Route path="/alumno/list" element={<AlumnoList />} />
           <Route path="/alumno/grid" element={<AlumnoGrid />} />
-          <Route path="/alumno/gest/:dni" element={<AlumnoGest />} />
+          <Route path="/alumno/gest/:id" element={<AlumnoGest />} />
           <Route path="/alumno/gest" element={<AlumnoGest />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/texto/:text" element={<Texto />} />

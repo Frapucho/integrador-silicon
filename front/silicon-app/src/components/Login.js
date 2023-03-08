@@ -20,6 +20,7 @@ class InternalLogin extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log(123);
     let data = {
       nickname: this.state.nickname,
       password: this.state.password,
@@ -47,6 +48,7 @@ class InternalLogin extends React.Component {
       })
       .then(
         (result) => {
+          console.log(result);
           if (result.ok) {
             console.log(result.body);
             localStorage.setItem("token", result.body.token);
@@ -63,7 +65,7 @@ class InternalLogin extends React.Component {
               theme: "light",
             });
 
-            this.props.navigate("/alumno/home");
+            window.location.href = "/home";
           } else {
             toast.error(result.body.message, {
               position: "bottom-right",
