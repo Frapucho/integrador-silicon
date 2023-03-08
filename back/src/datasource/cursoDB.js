@@ -52,6 +52,30 @@ cursoDb.getByidc = function (idcurso, funCallback) {
   );
 };
 
+//buscar alumnos por curso
+
+cursoDb.getAlumnosCurso = function (id, funCallBack) {
+  connection.query("SELECT alumnos.nombre, alumnos.apellido FROM alumno_curso INNER JOIN alumnos ON alumno_curso.id_alumno = alumnos.id WHERE alumno_curso.id_curso = ?", id, function (err, result, fields) {
+     if (err) {
+        funCallBack({
+           message: "Tuvimos un problema, disculpe las molestias",
+           detail: err
+        });
+        console.error(err);
+     } else {
+        if (result.length > 0) {
+           funCallBack(undefined, result);
+        } else {
+           funCallBack({
+              message: "No hay alumnos inscriptos"
+           })
+        }
+     };
+  });
+
+}
+
+
 cursoDb.create = function (curso, funCallback) {
   var query =
     "INSERT INTO cursos (nombre, descripcion, imagen, anio, activo) VALUES (?,?,?,?,?)";
@@ -86,6 +110,48 @@ cursoDb.create = function (curso, funCallback) {
     }
   });
 };
+
+//inscribir alumno
+cursoDb.inscribirAlumno = function (data, funCallBack) {
+
+  const { idCurso, idAlumnos } = data;
+  var query = "SELECT * FROM alumno_curso WHERE id_curso = ? AND id_alumno IN (?)";
+  var params = [idCurso, idAlumnos];
+  connection.query(query, params, function (err, result, fields) {
+
+     if (err) {
+
+        console.error(err);
+     } else {
+
+        if (result[0] && Object.keys(result[0]).length > 0) {
+           funCallBack({
+              message: "El alumno ya se encuentra inscripto",
+              detail: result
+           });
+
+        } else {
+
+           var query = "INSERT INTO alumno_curso (id_alumno, id_curso) VALUES ?";
+           const valores = idAlumnos.map(idAlumno => [idAlumno, idCurso]);
+           
+           connection.query(query, [valores], function (err, result, fields) {
+              if (err) {
+                 console.error(err);
+              } else {
+                 funCallBack({
+                    message: `Se inscribio correctamente al alumno  `,
+                    detail: result
+                 });
+              }
+           });
+
+
+        }
+     }
+  });
+
+}
 
 cursoDb.update = function (id, curso, funCallback) {
   var query =

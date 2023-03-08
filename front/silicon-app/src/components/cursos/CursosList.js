@@ -101,7 +101,7 @@ function CursoList() {
                 </button>
                 <button
                   className="btn btn-success"
-                  onClick={() => alert("Gestionar alumnos")}
+                  onClick={() => navigate(`/alumno/insc/${curso.id}`)}
                 >
                   <i className="fas fa-user-graduate"></i>
                 </button>

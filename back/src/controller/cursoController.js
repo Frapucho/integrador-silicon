@@ -9,7 +9,11 @@ app.get("/", securityCont.verificarToken, getAll);
 
 app.get("/:id", securityCont.verificarToken, getByidc);
 
+app.get('/id/:id', securityCont.verificarToken, getAlumnosCurso);
+
 app.post("/", securityCont.verificarToken, create);
+
+app.post('/alumnoCurso/', securityCont.verificarToken, inscribirAlumno);
 
 app.put("/:id", securityCont.verificarToken, update);
 
@@ -37,6 +41,19 @@ function getByidc(req, res) {
     }
   });
 }
+
+//Metodo para buscar alumnos con ID curso
+
+function getAlumnosCurso(req, res) {
+  cursoDb.getAlumnosCurso(req.params.id, function (err, result) {
+     if (err) {
+        res.status(500).send(err);
+     } else {
+        res.json(result);
+     }
+  })
+}
+
 // Metodo para agregar cursos
 function create(req, res) {
   cursoDb.create(req.body, function (err, result) {
@@ -47,6 +64,18 @@ function create(req, res) {
     }
   });
 }
+
+//Metodo para inscribir alumnos
+function inscribirAlumno(req, res) {
+  cursoDb.inscribirAlumno(req.body, function (err, result) {
+     if (err) {
+        res.status(500).send(err);
+     } else {
+        res.json(result);
+     }
+  })
+}
+
 // Metodo para modificar cursos
 function update(req, res) {
   cursoDb.update(req.params.id, req.body, function (result) {

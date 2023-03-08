@@ -27,14 +27,14 @@ function App() {
         <Routes>
           <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />
-          <Route path="/alumno/list" element={<AlumnoList />} />
+          <Route path="/alumno/insc/:id" element={<AlumnoList />} />
           <Route path="/alumno/grid" element={<AlumnoGrid />} />
           <Route path="/alumno/gest/:id" element={<AlumnoGest />} />
           <Route path="/alumno/gest" element={<AlumnoGest />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/texto/:text" element={<Texto />} />
 
-          <Route path="/cursos" element={<Cursos />} />
+          <Route path="/cursosP" element={<Cursos />} />
           <Route path="/cursosList" element={<CursosList />} />
           <Route path="/cursos/nuevo" element={<CursosForm />} />
           <Route path="/cursos/edit/:id" element={<CursosForm />} />

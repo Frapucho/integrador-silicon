@@ -65,7 +65,7 @@ class InternalLogin extends React.Component {
               theme: "light",
             });
 
-            window.location.href = "/home";
+            window.location.href = "/";
           } else {
             toast.error(result.body.message, {
               position: "bottom-right",
@@ -158,8 +158,8 @@ class InternalLogin extends React.Component {
 
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                >
+                  className="btn btn-primary btn-lg btn-block" >
+                
                   Iniciar Sesion
                 </button>
               </form>

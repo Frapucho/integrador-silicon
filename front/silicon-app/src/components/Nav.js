@@ -50,7 +50,7 @@ function Nav() {
                 </li>
                 
                 <li className="nav-item">
-                  <Link to="/cursos" className="nav-link">
+                  <Link to="/cursosP" className="nav-link">
                     Cursos
                   </Link>
                 </li>
@@ -113,7 +113,7 @@ function Nav() {
                 </li>
 
                 <li className="nav-item">
-                  <Link to="/cursos" className="nav-link">
+                  <Link to="/cursosP" className="nav-link">
                     Cursos
                   </Link>
                 </li>
