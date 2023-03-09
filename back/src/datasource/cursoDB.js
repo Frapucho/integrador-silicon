@@ -55,26 +55,52 @@ cursoDb.getByidc = function (idcurso, funCallback) {
 //buscar alumnos por curso
 
 cursoDb.getAlumnosCurso = function (id, funCallBack) {
-  connection.query("SELECT alumnos.nombre, alumnos.apellido FROM alumno_curso INNER JOIN alumnos ON alumno_curso.id_alumno = alumnos.id WHERE alumno_curso.id_curso = ?", id, function (err, result, fields) {
-     if (err) {
+  connection.query(
+    "SELECT * FROM alumno_curso INNER JOIN alumnos ON alumno_curso.id_alumno = alumnos.id WHERE alumno_curso.id_curso = ?",
+    id,
+    function (err, result, fields) {
+      if (err) {
         funCallBack({
-           message: "Tuvimos un problema, disculpe las molestias",
-           detail: err
+          message: "Tuvimos un problema, disculpe las molestias",
+          detail: err,
         });
         console.error(err);
-     } else {
+      } else {
         if (result.length > 0) {
-           funCallBack(undefined, result);
+          funCallBack(undefined, result[0]);
         } else {
-           funCallBack({
-              message: "No hay alumnos inscriptos"
-           })
+          funCallBack({
+            message: "No hay alumnos inscriptos",
+          });
         }
-     };
-  });
+      }
+    }
+  );
+};
 
-}
-
+cursoDb.getAlumnosInscriptos = function (id, funCallBack) {
+  connection.query(
+    "SELECT * FROM alumnos INNER JOIN alumno_curso ON alumnos.id = alumno_curso.id_alumno WHERE alumno_curso.id_curso = ?",
+    id,
+    function (err, result, fields) {
+      if (err) {
+        funCallBack({
+          message: "Tuvimos un problema, disculpe las molestias",
+          detail: err,
+        });
+        console.error(err);
+      } else {
+        if (result.length > 0) {
+          funCallBack(undefined, result);
+        } else {
+          funCallBack({
+            message: "No hay alumnos inscriptos",
+          });
+        }
+      }
+    }
+  );
+};
 
 cursoDb.create = function (curso, funCallback) {
   var query =
@@ -113,45 +139,39 @@ cursoDb.create = function (curso, funCallback) {
 
 //inscribir alumno
 cursoDb.inscribirAlumno = function (data, funCallBack) {
-
   const { idCurso, idAlumnos } = data;
-  var query = "SELECT * FROM alumno_curso WHERE id_curso = ? AND id_alumno IN (?)";
+  console.log(idCurso);
+  console.log(idAlumno);
+  var query =
+    "SELECT * FROM alumno_curso WHERE id_curso = ? AND id_alumno IN (?)";
   var params = [idCurso, idAlumnos];
   connection.query(query, params, function (err, result, fields) {
+    if (err) {
+      console.error(err);
+    } else {
+      if (result[0] && Object.keys(result[0]).length > 0) {
+        funCallBack({
+          message: "El alumno ya se encuentra inscripto",
+          detail: result,
+        });
+      } else {
+        var query = "INSERT INTO alumno_curso (id_alumno, id_curso) VALUES ?";
+        const valores = idAlumnos.map((idAlumno) => [idAlumno, idCurso]);
 
-     if (err) {
-
-        console.error(err);
-     } else {
-
-        if (result[0] && Object.keys(result[0]).length > 0) {
-           funCallBack({
-              message: "El alumno ya se encuentra inscripto",
-              detail: result
-           });
-
-        } else {
-
-           var query = "INSERT INTO alumno_curso (id_alumno, id_curso) VALUES ?";
-           const valores = idAlumnos.map(idAlumno => [idAlumno, idCurso]);
-           
-           connection.query(query, [valores], function (err, result, fields) {
-              if (err) {
-                 console.error(err);
-              } else {
-                 funCallBack({
-                    message: `Se inscribio correctamente al alumno  `,
-                    detail: result
-                 });
-              }
-           });
-
-
-        }
-     }
+        connection.query(query, [valores], function (err, result, fields) {
+          if (err) {
+            console.error(err);
+          } else {
+            funCallBack({
+              message: `Se inscribio correctamente al alumno  `,
+              detail: result,
+            });
+          }
+        });
+      }
+    }
   });
-
-}
+};
 
 cursoDb.update = function (id, curso, funCallback) {
   var query =
@@ -246,6 +266,51 @@ cursoDb.logdelete = function (id, funCallback) {
             detail: result,
           });
         }
+      }
+    }
+  );
+};
+
+cursoDb.inscribirAlumno = function (idCurso, idAlumno, funCallBack) {
+  console.log(idCurso);
+  console.log(idAlumno);
+  connection.query(
+    "INSERT INTO alumno_curso (id_alumno, id_curso) VALUES (?, ?)",
+    [idAlumno, idCurso],
+    function (err, result, fields) {
+      if (err) {
+        funCallBack({
+          message: "Tuvimos un problema, disculpe las molestias",
+          detail: err,
+        });
+        console.error(err);
+      } else {
+        funCallBack(undefined, {
+          message: "Alumno inscripto correctamente",
+        });
+      }
+    }
+  );
+};
+
+cursoDb.eliminarAlumno = function (idCurso, idAlumno, funCallBack) {
+  console.log({ idCurso });
+  console.log({ idAlumno });
+
+  connection.query(
+    "DELETE FROM alumno_curso WHERE id_alumno = ? AND id_curso = ?",
+    [idAlumno, idCurso],
+    function (err, result, fields) {
+      if (err) {
+        funCallBack({
+          message: "Tuvimos un problema, disculpe las molestias",
+          detail: err,
+        });
+        console.error(err);
+      } else {
+        funCallBack(undefined, {
+          message: "Alumno eliminado correctamente",
+        });
       }
     }
   );
