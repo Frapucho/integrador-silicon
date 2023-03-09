@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import login from "./Login";
 import App from "../App.css";
-
+import React, {useState, useEffect, useRef} from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 
@@ -9,13 +10,33 @@ import App from "../App.css";
 
 function Nav() {
   let token = localStorage.getItem('token');
+  
+  const [open, setOpen] = useState(false);
 
+  let menuRef = useRef();
+
+  useEffect(() => {
+    let handler = (e)=>{
+      if(!menuRef.current.contains(e.target)){
+        setOpen(false);
+        console.log(menuRef.current);
+      }      
+    };
+
+    document.addEventListener("mousedown", handler);
+    
+
+    return() =>{
+      document.removeEventListener("mousedown", handler);
+    }
+
+  });
 
   if (token) {
     return (
       <>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-primary" 
-         >
+        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-primary" >
+          
           <div className="container">
             <Link to="/" className="navbar-brand">
               <img src="/logo.png" className="nav-img-main" />
@@ -68,22 +89,26 @@ function Nav() {
                     CursosList
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">
-                    Sesion Activa
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/" className="nav-link" onClick={() => {
-                    localStorage.removeItem('token');
-                    window.location.href = '/';
-                  }}>
-                    Cerrar sesion
-                  </Link>
-                </li>
+                <Dropdown>
+                  <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                    Perfil
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item><h5>{localStorage.getItem('nickname')}<br/></h5></Dropdown.Item>
+                    <Dropdown.Item href="#/action-3"><li className="nav-item">
+                              <Link to="/" className="nav-link" onClick={() => {
+                                localStorage.removeItem('token');
+                                window.location.href = '/';
+                              }}>
+                                Cerrar sesion
+                              </Link>
+                            </li></Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </ul>
             </div>
           </div>
+          
         </nav>
       </>);
 
@@ -141,5 +166,6 @@ function Nav() {
   }
 
 }
+
 
 export default Nav;
