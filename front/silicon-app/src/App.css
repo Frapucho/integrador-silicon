@@ -14,9 +14,8 @@
   }
 } 
 body  {
-  background-image: url("./components/css/366326.jpg");
-  background-color: #cccccc;
-  background-size: cover;
+  height: 100vh;
+  background:linear-gradient(0deg, rgba(128, 128, 128, 1) 0%, rgba(255, 255, 255, 1) 99%, rgba(103, 102, 102, 1) 100%);
 }
 
 .App-header {
@@ -42,3 +41,4 @@ body  {
     transform: rotate(360deg);
   }
 }
+
