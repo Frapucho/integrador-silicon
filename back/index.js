@@ -40,6 +40,14 @@ app.get("/", function (req, res) {
 const cursoCont = require("./src/controller/cursoController");
 app.use("/api/cursos", cursoCont);
 
+//curso publico 
+app.get("/", function (req, res) {
+  res.send("ALPHA-SILICON");
+});
+
+const cursoPublic = require("./src/controller/cursoControllerPublic");
+app.use("/api/cursosP", cursoPublic);
+
 //se agrego seguridad
 const securityCont = require("./src/seguridad/seguridad");
 app.use("/api/ingresar", securityCont.app);

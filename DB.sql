@@ -29,10 +29,11 @@ activo BOOLEAN
 );
 
 CREATE TABLE alumno_curso (
-id_alumno INT UNSIGNED,
-id_curso INT UNSIGNED,
-FOREIGN KEY (id_alumno) REFERENCES alumnos(id),
-FOREIGN KEY (id_curso) REFERENCES cursos(id)
+  id_alumno INT UNSIGNED,
+  id_curso INT UNSIGNED,
+  FOREIGN KEY (id_alumno) REFERENCES alumnos(id),
+  FOREIGN KEY (id_curso) REFERENCES cursos(id),
+  UNIQUE (id_alumno, id_curso)
 );
 
 INSERT INTO usuarios (email, nickname, password, rol) VALUES

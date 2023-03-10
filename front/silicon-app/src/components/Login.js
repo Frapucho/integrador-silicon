@@ -53,6 +53,7 @@ class InternalLogin extends React.Component {
             console.log(result.body);
             localStorage.setItem("token", result.body.token);
             localStorage.setItem("rol", result.body.datos.rol);
+            localStorage.setItem("nickname", result.body.datos.nickname);
 
             toast.success(`Bienvenido ${result.body.message}`, {
               position: "bottom-right",
@@ -65,7 +66,7 @@ class InternalLogin extends React.Component {
               theme: "light",
             });
 
-            window.location.href = "/home";
+            window.location.href = "/";
           } else {
             toast.error(result.body.message, {
               position: "bottom-right",
@@ -158,8 +159,8 @@ class InternalLogin extends React.Component {
 
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                >
+                  className="btn btn-primary btn-lg btn-block" >
+                
                   Iniciar Sesion
                 </button>
               </form>
