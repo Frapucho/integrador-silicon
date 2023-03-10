@@ -32,6 +32,7 @@ function Home() {
               src="https://reddemediosmisiones.com.ar/download/multimedia.normal.83f10321ae72dbe1.53696c69636f6e2d4d6973696f6e65732d65313634303236343634383733365f6e6f726d616c2e6a7067.jpg"
               class="d-block w-100"
               alt="..."
+              width="auto" height="800"
             />
             <div class="carousel-caption d-none d-md-block">
               <h5>Somos el futuro y vos sos parte</h5>
@@ -47,6 +48,7 @@ function Home() {
               src="https://canal12misiones.com/wp-content/uploads/2022/07/WhatsApp-Image-2022-07-07-at-1.05.32-PM.jpeg"
               class="d-block w-100"
               alt="..."
+              width="auto" height="800"
             />
             <div class="carousel-caption d-none d-md-block">
               <h5>
@@ -65,6 +67,7 @@ function Home() {
               src="https://siliconmisiones.gob.ar/wp-content/uploads/2022/05/1-2-1024x683.jpg"
               class="d-block w-100"
               alt="..."
+              width="auto" height="800"
             />
             <div class="carousel-caption d-none d-md-block">
               <h5></h5>
