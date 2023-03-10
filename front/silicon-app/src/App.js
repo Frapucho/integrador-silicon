@@ -18,6 +18,7 @@ import Cursos from "./components/cursos/Cursos";
 import CursosList from "./components/cursos/CursosList";
 import CursosForm from "./components/cursos/CursosForm";
 import About from "./About";
+import "./App.css";
 
 function App() {
   return (
