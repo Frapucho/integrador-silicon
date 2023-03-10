@@ -17,11 +17,12 @@ function Cursos() {
         {cursos.map((curso) => (
           <div className="col-md-4 mb-3" key={curso.id}>
             <div className="card border-primary">
-              {/*               <img
+                <img
                 src={curso.imagen}
                 className="card-img-top"
                 alt={curso.nombre}
-              /> */}
+                width="200" height="200"
+              /> 
               <h5 className="card-title  text-center p-2">{curso.nombre}</h5>
               <div className="card-body">
                 <p className="card-text">{curso.descripcion}</p>
