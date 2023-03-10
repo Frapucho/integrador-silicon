@@ -51,11 +51,11 @@ INSERT INTO alumnos (nombre, apellido, dni, id_usuario) VALUES
 ('Pedro', 'Rodríguez', '56789012', 5);
 
 INSERT INTO cursos (nombre, descripcion, imagen, anio, activo) VALUES
-('Programación Web Full Stack', 'Curso de programación web completo', 'https://ejemplo.com/imagen1.jpg', 2023, true),
-('Diseño Gráfico', 'Curso de diseño gráfico para principiantes', 'https://ejemplo.com/imagen2.jpg', 2023, true),
-('Marketing Digital', 'Curso de marketing digital para emprendedores', 'https://ejemplo.com/imagen3.jpg', 2023, true),
-('Inglés Intermedio', 'Curso de inglés para estudiantes intermedios', 'https://ejemplo.com/imagen4.jpg', 2023, true),
-('Finanzas Personales', 'Curso de finanzas personales para no expertos', 'https://ejemplo.com/imagen5.jpg', 2023, true);
+('Programación Web Full Stack', 'Curso de programación web completo', 'https://www.naxer.es/wp-content/uploads/2021/05/8-lenguajes-de-programacion.jpg', 2023, true),
+('Diseño Gráfico', 'Curso de diseño gráfico para principiantes', 'https://www.uag.mx/contenido/wp72m5vS7M/cuanto-dura-la-carrera-de-diseno-grafico_JGD.jpg', 2023, true),
+('Marketing Digital', 'Curso de marketing digital para emprendedores', 'https://serverdo.in/wp-content/uploads/2019/06/mkt.jpeg', 2023, true),
+('Inglés Intermedio', 'Curso de inglés para estudiantes intermedios', 'https://www.estudiaingles.org/wp-content/uploads/2021/06/curso-intermedio-ingles.jpg', 2023, true),
+('Finanzas Personales', 'Curso de finanzas personales para no expertos', 'https://nheiddn.files.wordpress.com/2019/05/fp-01.png', 2023, true);
 
 INSERT INTO alumno_curso (id_alumno, id_curso) VALUES
 (1, 1),
