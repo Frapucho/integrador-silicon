@@ -16,8 +16,6 @@ app.put("/:id", securityCont.verificarToken, update);
 
 app.delete("/del/:id", securityCont.verificarToken, eliminar);
 
-
-
 // Metododo para listar todos los alumnos
 function getAll(req, res) {
   alumnoDB.getAll(function (err, result) {
@@ -52,7 +50,7 @@ function create(req, res) {
 function update(req, res) {
   alumnoDB.update(req.params.id, req.body, function (result) {
     if (result.code == 3) {
-      res.status(500).send(err);
+      //      res.status(500).send(err);
       res.status(500).send(result.message);
     } else if (result.code == 2) {
       res.status(404).json(result);
@@ -75,6 +73,5 @@ function eliminar(req, res) {
     }
   });
 }
-
 
 module.exports = app;

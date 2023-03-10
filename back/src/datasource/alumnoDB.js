@@ -33,7 +33,7 @@ alumnoDB.getAll = function (funCallback) {
 
 alumnoDB.getByid = function (idalumno, funCallback) {
   connection.query(
-    "SELECT * FROM alumno WHERE id=?",
+    "SELECT * FROM alumnos WHERE id=?",
     idalumno,
     function (err, result, fields) {
       if (err) {
@@ -86,8 +86,8 @@ alumnoDB.create = function (alumno, funCallback) {
 
 alumnoDB.update = function (id, alumno, funCallback) {
   var query =
-    "UPDATE alumnos SET id = ? , nombre = ?, apellido = ?,  dni = ? WHERE id = ?";
-  var dbParams = [alumno.id, alumno.nombre, alumno.apellido, alumno.dni, id];
+    "UPDATE alumnos SET  nombre = ?, apellido = ?,  dni = ? WHERE id = ?";
+  var dbParams = [alumno.nombre, alumno.apellido, alumno.dni, id];
 
   connection.query(query, dbParams, function (err, result, fields) {
     if (err) {
