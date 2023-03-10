@@ -53,6 +53,7 @@ class InternalLogin extends React.Component {
             console.log(result.body);
             localStorage.setItem("token", result.body.token);
             localStorage.setItem("rol", result.body.datos.rol);
+            localStorage.setItem("nickname", result.body.datos.nickname);
 
             toast.success(`Bienvenido ${result.body.message}`, {
               position: "bottom-right",
