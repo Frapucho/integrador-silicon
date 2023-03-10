@@ -15,7 +15,7 @@ var alumnoDB = {};
 
 alumnoDB.getAll = function (funCallback) {
   connection.query(
-    "SELECT * FROM alumnos where id >=1",
+    "SELECT * FROM alumnos where id >=1 order by apellido asc",
     function (err, result, fields) {
       if (err) {
         funCallback({
@@ -167,38 +167,5 @@ alumnoDB.findByNickname = function (nickname, funCallback) {
   );
 };
 
-// CREO QUE NO ENTRA EN LA CONSIGNA, SE PUEDE BORRAR LO COMENTADO
-
-/* alumnoDb.logdelete = function (id, funCallback) {
-    console.log(id);
-    connection.query(
-        "UPDATE alumnos SET activo = 0 WHERE id = ?", 
-        [id], 
-        function (err, result, fields) {
-        if (err) {
-            funCallback({
-                code: 3,
-                message: "Surgio un problema, contactese con un administrador. Gracias",
-                detail: err
-            });
-            console.error(err);
-        } else {
-            if (result.affectedRows == 0) {
-                funCallback({
-                    code: 2,
-                    message: `No se encontro el id  ${id} del alumno`,
-                    detail: result
-                });
-            } else {
-                //       console.error(err);
-                funCallback({
-                    code: 1,
-                    message: `Se modifico el alumno con el id ${id}`,
-                    detail: result
-                });
-            }
-        }
-    });
-} */
 
 module.exports = alumnoDB;

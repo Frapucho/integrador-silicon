@@ -59,14 +59,10 @@ const [open, setOpen] = useState(false);
                     About
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/alumno/list" className="nav-link">
-                    Listar Alumnos
-                  </Link>
-                </li>
+                
                 <li className="nav-item">
                   <Link to="/alumno/grid" className="nav-link">
-                    Grilla de Alumnos
+                    Lista de alumnos
                   </Link>
                 </li>
                 
@@ -77,7 +73,7 @@ const [open, setOpen] = useState(false);
                 </li>
                 <li className="nav-item">
                   <Link to="/cursosList" className="nav-link">
-                    CursosList
+                    Lista de Cursos
                   </Link>
                 </li>
                 
